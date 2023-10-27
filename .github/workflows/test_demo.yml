@@ -36,23 +36,23 @@ jobs:
       #  run: terraform init
       #- name: init
        # run: terraform init
-      - name: Deployment
-        uses: actions/checkout@v3
+      - name: Initialize
+        id: init
         env:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-
+        run: terraform init
       - name: Terraform plan
         id: plan
         env:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-        run: terraform init
+        run: terraform plan
       - name: Formating
         run: terraform fmt
-      - name: Run
+      - name: Running
         id: run
         env:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
