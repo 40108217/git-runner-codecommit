@@ -27,19 +27,14 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
-        uses: actions/checkout@v3
-        env:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
         
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!
 
       # Runs a set of commands using the runners shell
-      - name: Initialize Terraform
-        run: terraform init
+     # - name: Initialize Terraform
+      #  run: terraform init
 
       - name: Deployment
         uses: actions/checkout@v3
@@ -47,5 +42,11 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
+      - name: init
+        run: terraform init
+      - name: plan
+        run: terraform plan
+      - name: validate
+        run: terraform validate
       - name: Run
         run: terraform apply -auto-approve
