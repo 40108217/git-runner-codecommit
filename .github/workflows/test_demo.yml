@@ -16,6 +16,7 @@ env:
   aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
   aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   aws-region: ${{ secrets.AWS_REGION }}
+  root_path: './Landing_Zone'
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -50,8 +51,10 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
         run: terraform plan
+        working-directory: ${{ env.root_path }}
       - name: Formating
         run: terraform fmt
+        working-directory: ${{ env.root_path }}
       - name: Running
         id: run
         env:
@@ -59,3 +62,4 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
         run: terraform apply -auto-approve
+        working-directory: ${{ env.root_path }}
