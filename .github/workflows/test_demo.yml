@@ -45,12 +45,14 @@ jobs:
 
       - name: Initialize
         run: terraform init
-        path: './LandingZone/resources'
+        with:
+          path: './LandingZone/resources'
         # working-directory: ${{ env.ROOT_PATH }}
         
       - name: Terraform plan
         run: terraform plan
-        path: './LandingZone/resources'
+        with:
+          path: './LandingZone/resources'
         # working-directory: ${{ env.ROOT_PATH }}
 
       - name: Formating
