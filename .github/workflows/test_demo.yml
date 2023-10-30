@@ -38,20 +38,15 @@ jobs:
       # Runs a set of commands using the runners shell
      # - name: Initialize Terraform
       #  run: terraform init
-      - name: Dir
-        run: |
-          echo ${{ env.ROOT_PATH }}
-          pwd
+      
 
       - name: Initialize
         run: terraform init
         
-        working-directory: ${{ path }}
         
       - name: Terraform plan
         run: terraform plan
-        working-directory: ${{ path }}
-        # working-directory: ${{ env.ROOT_PATH }}
+        
 
       - name: Formating
         run: terraform fmt
