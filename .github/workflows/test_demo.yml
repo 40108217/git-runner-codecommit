@@ -41,7 +41,9 @@ jobs:
       
 
       - name: Initialize
-        run: terraform init
+        run: |
+          pwd
+          terraform init
         
         
       - name: Terraform plan
