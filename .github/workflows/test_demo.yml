@@ -32,14 +32,18 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       # This should work
       # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!!!!!
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          path: './LandingZone/resources'
 
       # Runs a set of commands using the runners shell
      # - name: Initialize Terraform
       #  run: terraform init
       - name: Dir
-        run: echo ${{ env.ROOT_PATH }}
+        run: |
+          echo ${{ env.ROOT_PATH }}
+          echo pwd
 
       - name: Initialize
         run: terraform init
