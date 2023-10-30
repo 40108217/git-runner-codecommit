@@ -64,4 +64,4 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
           root_path: '${{github.workspace}}/LandingZone/resource'
         run: terraform apply -auto-approve
-        root_path: '${{github.workspace}}/LandingZone/resource'
+        
