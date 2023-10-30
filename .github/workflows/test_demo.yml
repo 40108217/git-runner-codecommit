@@ -43,7 +43,7 @@ jobs:
       - name: Dir
         run: |
           echo ${{ env.ROOT_PATH }}
-          echo pwd
+          pwd
 
       - name: Initialize
         run: terraform init
