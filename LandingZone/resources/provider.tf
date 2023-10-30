@@ -16,5 +16,5 @@ provider "aws" {
   access_key = "AKIAZ7UUKARFSQPVT2LE"
   # secret_key = "AWS_SECRET_ACCESS_KEY"
   secret_key = "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"
-  # region = "us-east-1"
+  region = "us-east-1"
 }
