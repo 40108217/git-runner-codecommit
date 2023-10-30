@@ -36,9 +36,8 @@ jobs:
      # - name: Initialize Terraform
       #  run: terraform init
       - name: Dir
-        run: pwd
-        working-directory: ${{ env.ROOT_PATH }}
-        
+        run: echo ${{ env.ROOT_PATH }}
+
       - name: Initialize
         run: terraform init
         working-directory: ${{ env.ROOT_PATH }}
