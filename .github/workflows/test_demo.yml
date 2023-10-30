@@ -49,12 +49,14 @@ jobs:
         
       - name: Terraform plan
         run: terraform plan
-        
+        working-directory: './LandingZone/resources'
 
       - name: Formating
         run: terraform fmt
+        working-directory: './LandingZone/resources'
         # working-directory: ${{ env.ROOT_PATH }}
 
       - name: Apply
         run: terraform apply -auto-approve
+        working-directory: './LandingZone/resources'
         # working-directory: ${{ env.ROOT_PATH }}
