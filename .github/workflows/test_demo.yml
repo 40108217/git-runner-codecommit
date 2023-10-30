@@ -39,15 +39,16 @@ jobs:
         run: pwd
       - name: Initialize
         run: terraform init
-
+        
       - name: Terraform plan
         root_path: '${{github.workspace}}/LandingZone/resources'
         run: terraform plan
         working-directory: ${{ env.root_path }}
+
       - name: Formating
         run: terraform fmt
-        root_path: '${{github.workspace}}/LandingZone/resources'
-      - name: Running
-        root_path: '${{github.workspace}}/LandingZone/resources'
+        working-directory: ${{ env.root_path }}
+
+      - name: Apply
         run: terraform apply -auto-approve
-        
+        working-directory: ${{ env.root_path }}
