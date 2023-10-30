@@ -44,6 +44,7 @@ jobs:
         run: |
           pwd
           terraform init
+        working-directory: './LandingZone/resources'
         
         
       - name: Terraform plan
