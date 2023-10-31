@@ -6,10 +6,7 @@ data "aws_ami" "amazon_linux2" {
     values = ["amzn2-ami-hvm*"]
   }
 
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
+  
 
   owners = ["amazon"]
 }
