@@ -35,12 +35,10 @@ jobs:
         # with:
         #  path: './LandingZone/resources'
 
-      # Runs a set of commands using the runners shell
-     # - name: Initialize Terraform
-      #  run: terraform init
+    
       
 
-      - name: Initialize
+      - name: Initialize Terraform
         run: |
           pwd
           terraform init
