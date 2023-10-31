@@ -3,7 +3,7 @@ data "aws_ami" "amazon_linux2" {
 
   filter {
     name   = "name"
-    values = ["2023.2.*"]
+    values = ["amzn2-ami-hvm*"]
   }
 
   filter {
