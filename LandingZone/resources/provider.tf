@@ -13,8 +13,8 @@ provider "aws" {
   #region = ${{ secrets.AWS_REGION }}
   # profile = "aclg"
   # access_key = "AWS_ACCESS_KEY_ID"
-  access_key = "AKIAZ7UUKARFSQPVT2LE"
+  access_key = "AKIARJ7SRGWECBR2P6NJ"
   # secret_key = "AWS_SECRET_ACCESS_KEY"
-  secret_key = "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"
+  secret_key = "p4OMPzMLNO6njTNcHuAB/bYNbbFB7bzFzQ6bxCmd"
   region = "us-east-1"
 }

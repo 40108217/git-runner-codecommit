@@ -16,7 +16,7 @@ env:
   aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
   aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   aws-region: ${{ secrets.AWS_REGION }}
-  # ROOT_PATH: '${{ github.workspace }}/LandingZone/resources'
+  ROOT_PATH: '${{ github.workspace }}/LandingZone/resources'
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -42,19 +42,27 @@ jobs:
         run: |
           pwd
           terraform init
-        working-directory: './LandingZone/resources'
+        # working-directory: './LandingZone/resources'
+        working-directory: ${{ env.ROOT_PATH }}
         
         
       - name: Terraform plan
         run: terraform plan
-        working-directory: './LandingZone/resources'
+        # To be used if working directory is declared in the steps section
+        # working-directory: './LandingZone/resources'
+        # To be used if working directory is declared as variable at global level
+        working-directory: ${{ env.ROOT_PATH }}
 
       - name: Formating
         run: terraform fmt
-        working-directory: './LandingZone/resources'
-        # working-directory: ${{ env.ROOT_PATH }}
+        # To be used if working directory is declared in the steps section
+        # working-directory: './LandingZone/resources'
+        # To be used if working directory is declared as variable at global level
+        working-directory: ${{ env.ROOT_PATH }}
 
       - name: Apply
         run: terraform apply -auto-approve
-        working-directory: './LandingZone/resources'
-        # working-directory: ${{ env.ROOT_PATH }}
+        # To be used if working directory is declared in the steps section
+        # working-directory: './LandingZone/resources'
+        # To be used if working directory is declared as variable at global level
+        working-directory: ${{ env.ROOT_PATH }}
