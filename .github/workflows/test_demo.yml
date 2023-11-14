@@ -62,8 +62,9 @@ jobs:
         working-directory: ${{ env.ROOT_PATH }}
 terraform_apply:
         name: 'terraform apply'
-        needs: [Configure veru-approval-environment]
+        needs: [configure-veru-approval-environment]
         runs-on: ubuntu-latest
+        steps:
         - name: Checkout code
           uses: actions/checkout@v2
         - name: Apply
