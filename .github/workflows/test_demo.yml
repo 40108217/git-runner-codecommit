@@ -3,15 +3,15 @@
 name: CI
 
 # Controls when the workflow will run
-on:
+on: workflow_dispatch
   # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+ # push:
+  #  branches: [ "main" ]
+  #pull_request:
+  #  branches: [ "main" ]
 
   # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  #workflow_dispatch:
 env:
   aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
   aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -19,7 +19,7 @@ env:
   ROOT_PATH: '${{ github.workspace }}/LandingZone/resources'
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  configure-verus-approval-environment:
+  configure-veru-approval-environment:
   # This workflow contains a single job called "build"
   #build:
     # The type of runner that the job will run on
@@ -62,7 +62,7 @@ jobs:
         working-directory: ${{ env.ROOT_PATH }}
   terraform_apply:
         name: 'terraform apply'
-        needs: [configure-verus-approval-environment]
+        needs: [configure-veru-approval-environment]
         runs-on: ubuntu-latest
         steps:
         - name: Checkout code
