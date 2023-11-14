@@ -57,12 +57,13 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
+          working-directory: ${{ env.ROOT_PATH }}
+
         run: terraform plan
         # To be used if working directory is declared in the steps section
         # working-directory: './LandingZone/resources'
         # To be used if working directory is declared as variable at global level
-        working-directory: ${{ env.ROOT_PATH }}
-
+        
       - name: Formating
         run: terraform fmt
         # To be used if working directory is declared in the steps section
@@ -76,18 +77,23 @@ jobs:
         steps:
         - name: Checkout code
           uses: actions/checkout@v3
+          env:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: ${{ secrets.AWS_REGION }}
+            
         - name: Terraform Initialized
           run: terraform init
           working-directory: ${{ env.ROOT_PATH }}
-        #- name: terraform Apply
-        #  run: terraform apply -auto-approve
+        - name: terraform Apply
+          run: terraform apply -auto-approve
           # To be used if working directory is declared in the steps section
           # working-directory: './LandingZone/resources'
           # To be used if working directory is declared as variable at global level
-        #  working-directory: ${{ env.ROOT_PATH }}
-        - name: terraform Destroy
-          run: terraform destroy -auto-approve
+          working-directory: ${{ env.ROOT_PATH }}
+        #- name: terraform Destroy
+        #  run: terraform destroy -auto-approve
         # To be used if working directory is declared in the steps section
         # working-directory: './LandingZone/resources'
         # To be used if working directory is declared as variable at global level
-          working-directory: ${{ env.ROOT_PATH }}
+        #  working-directory: ${{ env.ROOT_PATH }}
