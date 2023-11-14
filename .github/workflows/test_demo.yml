@@ -70,9 +70,15 @@ jobs:
         - name: Terraform Initialize
           run: terraform init
           working-directory: ${{ env.ROOT_PATH }}
-        - name: terraform Apply
-          run: terraform apply -auto-approve
+        #- name: terraform Apply
+        #  run: terraform apply -auto-approve
           # To be used if working directory is declared in the steps section
           # working-directory: './LandingZone/resources'
           # To be used if working directory is declared as variable at global level
+        #  working-directory: ${{ env.ROOT_PATH }}
+        - name: terraform Destroy
+          run: terraform destroy -auto-approve
+        # To be used if working directory is declared in the steps section
+        # working-directory: './LandingZone/resources'
+        # To be used if working directory is declared as variable at global level
           working-directory: ${{ env.ROOT_PATH }}
