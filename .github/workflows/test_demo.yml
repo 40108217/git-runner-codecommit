@@ -48,7 +48,7 @@ jobs:
         run: |
           pwd
           terraform init
-          working-directory: ${{ env.ROOT_PATH }}
+        working-directory: ${{ env.ROOT_PATH }}
         # working-directory: './LandingZone/resources'
         
         
