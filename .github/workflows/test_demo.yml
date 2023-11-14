@@ -73,9 +73,10 @@ jobs:
         # To be used if working directory is declared as variable at global level
         working-directory: ${{ env.ROOT_PATH }}
   terraform_apply:
-        name: 'terraform apply'
+        name: 'terraform applying'
         needs: [configure-env01]
         runs-on: ubuntu-latest
+        # This is the environmnet declared that will be used for this section execution
         environment: veru-approval-environment
         steps:
         - name: Checkout code
