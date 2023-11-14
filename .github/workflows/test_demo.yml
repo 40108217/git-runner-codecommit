@@ -67,6 +67,9 @@ jobs:
         steps:
         - name: Checkout code
           uses: actions/checkout@v2
+        - name: Terraform Initialize
+          run: terraform init
+          working-directory: ${{ env.ROOT_PATH }}
         - name: Apply
           run: terraform apply -auto-approve
           # To be used if working directory is declared in the steps section
