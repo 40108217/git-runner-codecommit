@@ -60,10 +60,15 @@ jobs:
         # working-directory: './LandingZone/resources'
         # To be used if working directory is declared as variable at global level
         working-directory: ${{ env.ROOT_PATH }}
-
-      - name: Apply
-        run: terraform apply -auto-approve
-        # To be used if working directory is declared in the steps section
-        # working-directory: './LandingZone/resources'
-        # To be used if working directory is declared as variable at global level
-        working-directory: ${{ env.ROOT_PATH }}
+terraform_apply:
+        name: 'terraform apply'
+        needs: [Configure veru-approval-environment]
+        runs-on: ubuntu-latest
+        - name: Checkout code
+          uses: actions/checkout@v2
+        - name: Apply
+          run: terraform apply -auto-approve
+          # To be used if working directory is declared in the steps section
+          # working-directory: './LandingZone/resources'
+          # To be used if working directory is declared as variable at global level
+          working-directory: ${{ env.ROOT_PATH }}
