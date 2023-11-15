@@ -1,8 +1,8 @@
 terraform{
     backend "s3" {
-        bucket = "40108217-tmp"
-        key = "test.tfstate"
-        region = "us-east-1"
-        # profile = "default"
+        bucket = "sample-bucket-102320235505"
+        key = "elasticbeanstalk.tfstate"
+        region = "us-gov-west-1"
+        profile = "default"
     }
 }
