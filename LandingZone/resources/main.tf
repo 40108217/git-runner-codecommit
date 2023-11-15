@@ -58,7 +58,7 @@ resource "aws_elastic_beanstalk_environment" "example" {
   name                = "example-env"
   application         = aws_elastic_beanstalk_application.example.name
   solution_stack_name = "64bit Amazon Linux 2023 v4.0.5 running Python 3.11"
-  depends_on = [aws_iam_role.elasticbeanstalk-ec2-profile-role-tm]
+  depends_on = [aws_iam_role.elasticbeanstalk_ec2-profile_role]
 
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
