@@ -1,0 +1,97 @@
+name: ManagementGroup
+on: workflow_dispatch
+# defaults:
+#   run:
+#     working-directory: ./lz01
+
+permissions: 
+  id-token: write
+  contents: read
+  deployments: write
+env: 
+    ROOT_PATH: './ManagementGroup' # set the working directory
+    ARM_ENVIRONMENT: 'usgovernment' # create the environment in the github to save the following secret variables
+    STORAGE_ACCOUNT : ${{secrets.STORAGE_ACCOUNT}} # Secret variable in github
+    CONTAINER_NAME: ${{secrets.CONTAINER_NAME}} # Secret variable in github
+    RESOURCE_GROUP_NAME: ${{secrets.RESOURCE_GROUP_NAME}} # Secret variable in github
+    ARM_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}} # Secret variable in github
+    ARM_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}} # Secret variable in github
+    ARM_TENANT_ID: ${{secrets.AZURE_TENANT_ID}} # Secret variable in github
+
+jobs:
+
+    
+  configure-env01: # defined as stage
+    runs-on: self-hosted
+#    environment: USGov
+    steps:
+      - name: Az CLI login # fetch the below secret variables and login to azure cloud
+        uses: azure/login@v1
+        with:
+              # poinging to Security subscription as we need to read remote state from there. 
+              client-id: ${{ secrets.LZ_AZUREGOV_SEC_STATE_AZURE_CLIENT_ID }}
+              tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+              # poinging to Security subscription as we need to read remote state from there. 
+              subscription-id: ${{ secrets.LZ_AZUREGOV_SEC_STATE_AZURE_SUBSCRIPTION_ID }}
+              environment: AzureUSGovernment
+
+      - name: checkout repository
+        uses: actions/checkout@v3
+        env: 
+
+            ARM_ENVIRONMENT: 'usgovernment'
+            STORAGE_ACCOUNT : ${{secrets.STORAGE_ACCOUNT}}
+            CONTAINER_NAME: ${{secrets.CONTAINER_NAME}}
+            RESOURCE_GROUP_NAME: ${{secrets.RESOURCE_GROUP_NAME}}
+            ARM_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
+            ARM_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+            ARM_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
+                
+      - name: terraform-init
+        working-directory: ${{env.ROOT_PATH}}
+        run: terraform init -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP_NAME"
+        # here in run command, variables are supplied while execution 
+      - name: Terraform plan
+        id: plan
+        env:
+            ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+            ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+            ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  
+        run: terraform plan -no-color
+        working-directory: ${{env.ROOT_PATH}}
+            
+
+
+  terraform_apply: # defined as another stage
+            name: 'terraform apply'
+            needs: [configure-env01] # it implies that the "terraform apply" step should only run if the "configure-env01" step completes successfully
+            runs-on: self-hosted
+            environment: USGov
+            steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+              env:                 # call the secret variables again for this stage to consume
+
+                ARM_ENVIRONMENT: 'usgovernment'
+                STORAGE_ACCOUNT : ${{secrets.STORAGE_ACCOUNT}}
+                CONTAINER_NAME: ${{secrets.CONTAINER_NAME}}
+                RESOURCE_GROUP_NAME: ${{secrets.RESOURCE_GROUP_NAME}}
+                ARM_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
+                ARM_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+                ARM_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
+                    
+            - name: terraform-init
+              working-directory: ${{env.ROOT_PATH}}
+              run: terraform init -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP_NAME"
+               # here in run command, variables are supplied while execution 
+                #github.ref == 'refs/heads/main' && github.event_name == 'push'
+            - name: terraform Apply
+              run: terraform apply -auto-approve
+            #   if: ${{inputs.tf_destroy}} == false
+              working-directory: ${{ env.ROOT_PATH }}
+        
+            # - name: terraform destroy
+            #   run: terraform destroy -auto-approve
+            #   if: ${{inputs.tf_destroy}} == true
+            #   working-directory: ${{ env.ROOT_PATH }}
