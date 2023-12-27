@@ -20,7 +20,7 @@ resource "aws_instance" "web" {
   }
 }
 
-============
+###############################
 #Spin 3 VMs in different AZ
 
 
