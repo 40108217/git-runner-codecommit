@@ -19,7 +19,7 @@ resource "aws_instance" "web" {
     Name = "HelloWorld"
   }
 }
-
+/*
 ###############################
 #Spin 3 VMs in different AZ
 
@@ -84,4 +84,4 @@ resource "aws_instance" "awsec2l" {
     Name = var.ec2_tags[count.index]
   }
 }
-
+*/
